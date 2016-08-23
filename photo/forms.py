@@ -5,4 +5,4 @@ from photo.models import Photo
 class PhotoEditForm(forms.ModelForm):
 	class Meta:
 		model = Photo
-		exclude = ('filtered_image_file', )
+		exclude = ('filtered_image_file', 'user')
