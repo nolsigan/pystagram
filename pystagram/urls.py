@@ -38,6 +38,9 @@ urlpatterns = [
 
     # profiles
     url(r'^user/', include('profiles.urls')),
+
+    # blog
+    url(r'^blog/', include('blog.urls'))
 ]
 
 if settings.DEBUG:
