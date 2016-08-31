@@ -19,3 +19,8 @@ def single_blog(request, blog_id):
         pushed_at = blog.pushed_at
         )
     )
+
+def all_blogs(request):
+    return render(request, 'index.html', {
+        'blogs': Blog.objects.all
+    })
