@@ -1,7 +1,9 @@
 # coding: utf-8
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Blog
+from django.contrib.auth.decorators import user_passes_test
+from blog.forms import BlogNewForm
 
 # show single blog
 def single_blog(request, blog_id):
@@ -20,7 +22,24 @@ def single_blog(request, blog_id):
         )
     )
 
+# show all blogs
 def all_blogs(request):
     return render(request, 'index.html', {
         'blogs': Blog.objects.all
+    })
+
+# create a new blog
+@user_passes_test(lambda u: u.is_superuser)
+def new_blog(request):
+    if request.method == 'GET':
+        new_form = BlogNewForm()
+    elif request.method == 'POST':
+        new_form = BlogNewForm(request.POST, request.FILES)
+
+        if new_form.is_valid():
+            new_blog = new_form.save()
+            return redirect(new_blog.get_absolute_url())
+
+    return render(request, 'new.html', {
+        'form': new_form,
     })
