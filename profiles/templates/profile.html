@@ -4,10 +4,10 @@
 {{ current_user.username }}님의 프로필 페이지
 
 <ul>
-    {% for photo in current_user.photo_set.all %}
-        <li><img src="{{photo.image_file.url}}"></li>
+    {% for blog in current_user.blog_set.all %}
+        <li>{{ blog.blog_url }}</li>
     {% empty %}
-        <li>게시한 사진이 없습니다.</li>
+        <li>구독 중인 블로그가 없습니다.</li>
     {% endfor %}
 </ul>
 
