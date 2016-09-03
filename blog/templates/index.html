@@ -1,13 +1,25 @@
 {% extends 'layout.html' %}
-
+{% load staticfiles %}
+{% block js %}
+    {{block.super}}
+    <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+{% endblock %}
 {% block content %}
 모든 블로그를 보여드릴게요.
 
 <ul>
     {% for blog in blogs %}
         <li>{{blog.blog_url}}</li>
+        {{ blog.users.id }}
+        {% if user in blog.users.all %}
+            <li>구독 중</li>
+        {% else %}
+            <button class="subscribe" name="{{blog.id}}">구독하기</button>
+        {% endif %}
     {% empty %}
         <li>등록된 블로그가 없습니다.</li>
     {% endfor %}
+
+    {{ user.id }}
 </ul>
 {% endblock %}

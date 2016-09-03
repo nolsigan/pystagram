@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^(?P<blog_id>\d+)$',
+    url(r'^(?P<blog_id>\d+)/$',
         views.single_blog,
         name='view_single_blog'),
 
@@ -10,7 +10,11 @@ urlpatterns = [
         views.all_blogs,
         name='view_all_blogs'),
 
-    url(r'^new$',
+    url(r'^new/$',
         views.new_blog,
         name='view_new_blog'),
+
+    url(r'^subscribe/$',
+        views.subscribe,
+        name='view_subscribe'),
 ]
