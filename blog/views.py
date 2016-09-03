@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Blog
 from django.contrib.auth.decorators import user_passes_test, login_required
-from blog.forms import BlogNewForm
+from .forms import BlogNewForm
+from .tasks import test, crawl_blogs
 
 
 # show single blog
@@ -54,6 +55,8 @@ def subscribe(request):
     if request.method != 'POST':
         return JsonResponse({'status': 'wrong access'})
 
-    blog = get_object_or_404(Blog, id=request.POST.get('id'))
-    blog.users.add(request.user)
+    # blog = get_object_or_404(Blog, id=request.POST.get('id'))
+    # blog.users.add(request.user)
+
+    crawl_blogs.delay()
     return JsonResponse({'status': 'ok'})

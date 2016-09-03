@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'photo',
     'profiles',
-    'blog'
+    'blog',
+    'djcelery',
 ]
 
 MIDDLEWARE = [
