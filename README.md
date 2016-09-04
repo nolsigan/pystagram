@@ -13,4 +13,4 @@
 
 ### celery
 
-* celery -A pystagram worker --loglevel=info (debug mode)
+* celery -A pystagram worker --loglevel=info (debug mode) --beat
