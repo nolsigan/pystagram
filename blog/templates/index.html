@@ -9,8 +9,8 @@
 
 <ul>
     {% for blog in blogs %}
-        <li>{{blog.blog_url}}</li>
-        {{ blog.users.id }}
+        <li>{{ blog.blog_url }}</li>
+        <li>{{ blog.pushed_at }}</li>
         {% if user in blog.users.all %}
             <li>구독 중</li>
         {% else %}
