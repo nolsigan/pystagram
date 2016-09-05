@@ -55,8 +55,8 @@ def subscribe(request):
     if request.method != 'POST':
         return JsonResponse({'status': 'wrong access'})
 
-    # blog = get_object_or_404(Blog, id=request.POST.get('id'))
-    # blog.users.add(request.user)
+    blog = get_object_or_404(Blog, id=request.POST.get('id'))
+    blog.users.add(request.user)
 
     batch_send_email.delay()
     return JsonResponse({'status': 'ok'})
