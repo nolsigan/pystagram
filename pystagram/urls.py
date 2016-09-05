@@ -40,7 +40,10 @@ urlpatterns = [
     url(r'^user/', include('profiles.urls')),
 
     # blog
-    url(r'^blog/', include('blog.urls'))
+    url(r'^blog/', include('blog.urls')),
+
+    # github social login
+    url('', include('social.apps.django_app.urls', namespace='social')),
 ]
 
 if settings.DEBUG:

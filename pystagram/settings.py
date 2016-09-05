@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'profiles',
     'blog',
     'djcelery',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -104,6 +107,21 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Github social login
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.github.GithubOAuth2',
+)
+
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'email']
+
+SOCIAL_AUTH_GITHUB_KEY = '357be62bbbe6f952eaee'
+SOCIAL_AUTH_GITHUB_SECRET = '5ea48773f7bcab1fc0453dc9f24cb817092e7101'
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/blog/'
+SOCIAL_AUTH_LOGIN_URL = '/'
 
 
 # Internationalization
