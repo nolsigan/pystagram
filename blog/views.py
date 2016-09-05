@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import Blog
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import BlogNewForm
-from .tasks import test, crawl_blogs
+from .tasks import batch_send_email
 
 
 # show single blog
@@ -58,5 +58,5 @@ def subscribe(request):
     # blog = get_object_or_404(Blog, id=request.POST.get('id'))
     # blog.users.add(request.user)
 
-    crawl_blogs.delay()
+    batch_send_email.delay()
     return JsonResponse({'status': 'ok'})

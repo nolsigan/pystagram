@@ -140,3 +140,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 # Temporary url
 
 LOGIN_REDIRECT_URL = '/photo/upload'
+
+# Email settings
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'teamsv.net@gmail.com'
+EMAIL_HOST_PASSWORD = 'teamsvjjang'
+EMAIL_PORT = 587

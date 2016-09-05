@@ -6,6 +6,8 @@ import certifi
 import json
 import pytz
 from datetime import datetime
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 
 @shared_task
@@ -32,8 +34,29 @@ def crawl_blogs():
             if dt > blog.pushed_at.replace(tzinfo=None):
                 print('Have to update pushed_at!')
                 blog.pushed_at = dt.replace(tzinfo=pytz.UTC)
+                blog.need_notifi = True
                 blog.save()
             else:
                 print('Do not need update')
+                blog.need_notifi = False
+                blog.save()
 
     return 'crawl_blogs has blogs "%d" ' % blogs.__len__()
+
+
+def notification_email(blog, to):
+    title = 'You received a new notification!'
+    body = 'Go and check it out! : ' + blog.blog_url
+    email = EmailMessage(title, body, settings.EMAIL_HOST_USER, to=to)
+    email.send()
+
+
+@shared_task
+def batch_send_email():
+    blogs = Blog.objects.all()
+    for blog in blogs:
+        if blog.need_notifi:
+            print('sending notifi_email for blog ' + blog.id)
+            to = [u.email for u in blog.users.all()]
+            notification_email(blog, to)
+

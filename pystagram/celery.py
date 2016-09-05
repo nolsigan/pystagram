@@ -15,9 +15,13 @@ app = Celery('crawler', broker='redis://localhost:6379/0')
 app.config_from_object('django.conf:settings')
 app.conf.update(
     CELERYBEAT_SCHEDULE={
-        'check-push-every-midnight': {
+        'check-push-at-2-am': {
             'task': 'blog.tasks.crawl_blogs',
             'schedule': crontab(minute=0, hour=17)
+        },
+        'send-notification-email-at-10-am': {
+            'task': 'blog.tasks.batch_send_email',
+            'schedule': crontab(minute=0, hour=1)
         }
     },
 )

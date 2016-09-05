@@ -13,6 +13,7 @@ class Blog(models.Model):
     gh_url = models.CharField(max_length=200)
     blog_url = models.CharField(max_length=200)
     pushed_at = models.DateTimeField(auto_now_add=True)
+    need_notifi = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # redirecting 할 url을 반환
