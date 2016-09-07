@@ -157,7 +157,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 
 # Temporary url
 
-LOGIN_REDIRECT_URL = '/photo/upload'
+LOGIN_REDIRECT_URL = '/blog/'
 
 # Email settings
 

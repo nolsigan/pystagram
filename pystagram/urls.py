@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import login, logout
 from photo.views import single_photo, new_photo
+from .views import register
 
 urlpatterns = [
     # photos
@@ -28,10 +29,13 @@ urlpatterns = [
     # login, out
     url(r'^accounts/login/', login, name='login',
         kwargs={
-            'template_name': 'login.html'
+            'template_name': 'login.html',
         }
     ),
-    url(r'^accounts/logout/', logout, name='logout'),
+    url(r'^accounts/logout/', logout, {'next_page': '/blog/'}, name='logout'),
+
+    # register
+    url(r'^accounts/register/', register, name='register'),
 
     # admin
     url(r'^admin/', admin.site.urls),

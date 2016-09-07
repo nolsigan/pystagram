@@ -4,7 +4,6 @@ from django.http import HttpResponse, JsonResponse
 from .models import Blog
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import BlogNewForm
-from .tasks import batch_send_email
 
 
 # show single blog
@@ -27,8 +26,25 @@ def single_blog(request, blog_id):
 
 # show all blogs
 def all_blogs(request):
+    first = []
+    second = []
+    third = []
+    i = 0
+
+    blogs = list(Blog.objects.all())
+    for blog in blogs:
+        if i % 3 == 0:
+            first.append(blog)
+        elif i % 3 == 1:
+            second.append(blog)
+        else:
+            third.append(blog)
+        i += 1
+
     return render(request, 'index.html', {
-        'blogs': Blog.objects.all,
+        'col_1': first,
+        'col_2': second,
+        'col_3': third,
     })
 
 
@@ -56,7 +72,9 @@ def subscribe(request):
         return JsonResponse({'status': 'wrong access'})
 
     blog = get_object_or_404(Blog, id=request.POST.get('id'))
-    blog.users.add(request.user)
+    if request.user in blog.users.all():
+        blog.users.remove(request.user)
+    else:
+        blog.users.add(request.user)
 
-    batch_send_email.delay()
     return JsonResponse({'status': 'ok'})

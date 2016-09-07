@@ -2,11 +2,13 @@ var Blog = {
     init: function() {
         $('.subscribe').click(function() {
             var pk = $(this).attr('name');
+            console.log(pk)
             $.post(
                 location.pathname + 'subscribe/',
                 { 'id' : pk },
                 function(data){
                     console.log(data);
+                    document.getElementsByName('div-subs-'+pk)[0].innerHTML = "<li>구독 중</li>";
                 }
             )
         });

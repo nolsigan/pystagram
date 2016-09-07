@@ -1,23 +1,80 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% block js %}
-    {{block.super}}
     <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
 {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
 {% block content %}
-모든 블로그를 보여드릴게요.
 
-<ul>
-    {% for blog in blogs %}
-        <li>{{ blog.blog_url }}</li>
-        <li>{{ blog.pushed_at }}</li>
-        {% if user in blog.users.all %}
-            <li>구독 중</li>
-        {% else %}
-            <button class="subscribe" name="{{blog.id}}">구독하기</button>
-        {% endif %}
-    {% empty %}
-        <li>등록된 블로그가 없습니다.</li>
-    {% endfor %}
-</ul>
+    <div class="blog-list">
+        <div class="row">
+            <div class="col-sm-4">
+                {% for blog in col_1 %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><a href="{{ blog.blog_url }}">{{ blog.title }}</a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <li><a href="{{ blog.gh_url }}">{{ blog.gh_url }}</a></li>
+                            {% if user in blog.users.all %}
+                                <li>구독 중</li>
+                            {% elif user.is_authenticated %}
+                                <div name="div-subs-{{ blog.id }}">
+                                    <button class="btn btn-success btn-block btn-subscribe subscribe"
+                                            name="{{ blog.id }}">구독하기
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <li>등록된 블로그가 없습니다.</li>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4">
+                {% for blog in col_2 %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><a href="{{ blog.blog_url }}">{{ blog.title }}</a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <li><a href="{{ blog.gh_url }}">{{ blog.gh_url }}</a></li>
+                            {% if user in blog.users.all %}
+                                <li>구독 중</li>
+                            {% elif user.is_authenticated %}
+                                <div name="div-subs-{{ blog.id }}">
+                                    <button class="btn btn-success btn-block btn-subscribe subscribe"
+                                            name="{{ blog.id }}">구독하기
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4">
+                {% for blog in col_3 %}
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><a href="{{ blog.blog_url }}">{{ blog.title }}</a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <li><a href="{{ blog.gh_url }}">{{ blog.gh_url }}</a></li>
+                            {% if user in blog.users.all %}
+                                <li>구독 중</li>
+                            {% elif user.is_authenticated %}
+                                <div name="div-subs-{{ blog.id }}">
+                                    <button class="btn btn-success btn-block btn-subscribe subscribe"
+                                            name="{{ blog.id }}">구독하기
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
