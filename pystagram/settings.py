@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'photo',
     'profiles',
     'blog',
+    'contact',
     'djcelery',
     'social.apps.django_app.default',
 ]

@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+{% block content %}
+
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
+
+    <div class="contact">
+        <h2>의견을 들려주세요</h2>
+        <h5>새로 등록 됐으면 하는 블로그, 혹은 기능을 알려주세요</h5>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 contact-form">
+            <form
+                    method="POST"
+                    action="{% url 'view_new_contact' %}"
+                    enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><label for="id_title">Title</label></p>
+                <p><input id="id_title" maxlength="200" name="title" type="text" size="40" required/></p>
+                <p><label for="id_body">Body</label></p>
+                <p><textarea cols="40" id="id_body" maxlength="500" name="body" rows="10"></textarea></p>
+
+                <button class="btn btn-lg btn-primary" type="submit">의견 보내기</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+{% endblock %}

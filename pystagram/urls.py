@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import login, logout
 from photo.views import single_photo, new_photo
+from contact.views import new_contact
 from .views import register
 
 urlpatterns = [
@@ -35,7 +36,7 @@ urlpatterns = [
     url(r'^accounts/logout/', logout, {'next_page': '/blog/'}, name='logout'),
 
     # register
-    url(r'^accounts/register/', register, name='register'),
+    url(r'^accounts/register/', register, name='view_register'),
 
     # admin
     url(r'^admin/', admin.site.urls),
@@ -48,6 +49,9 @@ urlpatterns = [
 
     # github social login
     url('', include('social.apps.django_app.urls', namespace='social')),
+
+    # contact
+    url(r'^contact/', new_contact, name='view_new_contact'),
 ]
 
 if settings.DEBUG:

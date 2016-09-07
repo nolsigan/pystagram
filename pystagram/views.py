@@ -16,7 +16,6 @@ def register(request):
             return redirect('/user/' + new_user.username + '/')
     else:
         form = UserCreationForm()
-        print form
 
     return render(request, "register.html", {
         'form': form,
