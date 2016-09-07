@@ -1,14 +1,51 @@
 {% extends 'layout.html' %}
-
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
 {% block content %}
-{{ current_user.username }}님의 프로필 페이지
 
-<ul>
-    {% for blog in current_user.blog_set.all %}
-        <li>{{ blog.blog_url }}</li>
-    {% empty %}
-        <li>구독 중인 블로그가 없습니다.</li>
-    {% endfor %}
-</ul>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><img src="https://avatars.githubusercontent.com/u/{{ uid }}" width="80%"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 style="margin-top: 40px;">{{ current_user.username }}</h1>
+                    </div>
+                    <div class="col-md-4"><h5 style="margin-top: 40px;"><span id="share"></span></h5></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Subscribing : {{ subscribes }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Blog</th>
+                    <th>Updated at (UTC)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for blog in current_user.blog_set.all %}
+                    <tr>
+                        <td><a href="{{ blog.blog_url }}">{{ blog.title }}</a></td>
+                        <td>{{ blog.pushed_at }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
 {% endblock %}
