@@ -1,3 +1,4 @@
+# coding: utf-8
 from __future__ import absolute_import
 from celery import shared_task
 from .models import Blog
@@ -51,6 +52,7 @@ def notification_email(blog, to):
     email.send()
 
 
+# TODO : 유저 단위로 돌면서 보내도록 변경 고려
 @shared_task
 def batch_send_email():
     blogs = Blog.objects.all()
@@ -59,4 +61,5 @@ def batch_send_email():
             print('sending notifi_email for blog ' + blog.id)
             to = [u.email for u in blog.users.all()]
             notification_email(blog, to)
+
 
